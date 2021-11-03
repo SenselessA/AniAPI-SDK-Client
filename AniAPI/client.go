@@ -46,10 +46,14 @@ func (c Client) UpdateUser() (User, error) {
 	json_data, err := json.Marshal(values)
 
 	if err != nil {
-		return nil, err
+		return User{}, err
 	}
 
 	req, err := http.NewRequest("POST", "https://api.aniapi.com/v1/user", bytes.NewBuffer(json_data))
+
+	if err != nil {
+		return User{}, err
+	}
 
 	req.Header.Add("Authorization", `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNyIsIm5iZiI6MTYzNTk1MjcyNywiZXhwIjoxNjM4NTQ0NzI3LCJpYXQiOjE2MzU5NTI3Mjd9.g1CGLqWYkQqhrF_bMkNWd2smkbEnB5PNZkOXms3F7jc`)
 	req.Header.Add("Content-Type", `application/json`)
@@ -58,19 +62,19 @@ func (c Client) UpdateUser() (User, error) {
 	resp, err := c.client.Do(req)
 
 	if err != nil {
-		return nil, err
+		return User{}, err
 	}
 
 	defer resp.Body.Close()
 
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		return nil, err
+		return User{}, err
 	}
 
 	var r userResponse
 	if err = json.Unmarshal(body, &r); err != nil {
-		return nil, err
+		return User{}, err
 	}
 
 	return r.User, nil

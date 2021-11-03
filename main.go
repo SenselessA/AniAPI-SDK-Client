@@ -30,5 +30,5 @@ func main() {
 		log.Fatal(err)
 	}
 
-	println(user)
+	fmt.Println(user)
 }
