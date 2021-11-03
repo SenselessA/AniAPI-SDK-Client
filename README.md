@@ -1,4 +1,4 @@
-# Kitsu-SDK-Client
+# AniAPI-SDK-Client
 
 ** Usage
 
